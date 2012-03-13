@@ -1,0 +1,7 @@
+{
+  "color" : false,
+  "level" : {
+    "*": "debug"
+  }
+}
+
