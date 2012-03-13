@@ -138,4 +138,6 @@ function startPollingMasterServer() {
 }
 
 
-startPollingMasterServer();
+if (typeof exports == 'object') {
+  exports.startPollingMasterServer = startPollingMasterServer;
+}
