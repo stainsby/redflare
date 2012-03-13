@@ -51,13 +51,13 @@ function processsServerReply(host, port, reply) {
   report.port = port - 1;
   report.checked = checked.getTime();
   report.clients = stream.readNextInt();
-  report.args = stream.readNextInt();
+  stream.readNextInt(); // reads no. of args following - not used
   report.gameVersion = stream.readNextInt();
-  report.gameMode = stream.readNextInt();
-  report.mutatorFlags = stream.readNextInt();
+  report.gameMode = protocol.gameModeFromCode(stream.readNextInt());
+  report.mutators = protocol.mutatorsFromFlags(stream.readNextInt());
   report.timeLeft = stream.readNextInt();
   report.maxClients = stream.readNextInt();
-  report.masterMode = stream.readNextInt();
+  report.masterMode = protocol.masterModeFromCode(stream.readNextInt());
   report.variableCount = stream.readNextInt();
   report.modificationCount = stream.readNextInt();
   report.mapName = stream.readNextString();
@@ -88,7 +88,7 @@ function startServerCheck(host, port) {
   client.on('message', function (reply) {
     client.close();
     var report = processsServerReply(host, port, reply);
-    logger.debug('    report: {}', JSON.stringify(report));
+    logger.debug('report: {}', JSON.stringify(report));
   });
   client.send(query, 0, query.length, port, host);
 }
