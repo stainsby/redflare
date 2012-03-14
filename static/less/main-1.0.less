@@ -1,0 +1,52 @@
+@import "theme-1.0.less";
+@import "elements-0.6.less";
+
+body {
+  font-family: @font, Helvetica, Arial, sans-serif;
+  color: @text-color;
+  font-size: @text-size;
+  background: @background-color;
+  margin: 0;
+}
+div.banner {
+  background-image: url(/img/bg.jpg);
+  background-repeat: no-repeat;
+  background-position: center top;
+  padding: 16px 64px 16px 64px;
+  line-height: 1.1em;
+}
+div.content {
+  padding: 16px 64px 16px 32px;
+  .box-shadow(inset 0 0 16px #f40);
+  background: #111;
+  margin: 0 64px 0 64px;
+  .rounded(16px);
+  line-height: 1.4em;
+  color: @content-text-color;
+}
+div.footer {
+  padding: 16px 64px 16px 8em;
+  font-size: 80%;
+  line-height: 1.1em;
+}
+h1 {
+  color: @title-color;
+  text-shadow: 0 0 32px @text-color;
+}
+a {
+  text-decoration: none;
+  color: @link-color;
+}
+a:hover {
+  text-decoration: underline;
+}
+a:visited {
+  color: @link-color;
+}
+th, td {
+  padding: 0 4px 0 4px;
+}
+
+div.clearfix {
+  clear: both;
+}

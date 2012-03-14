@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Red Flare - the Red Eclipse gaming monitor</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+<link href='http://fonts.googleapis.com/css?family=Prosto+One' rel='stylesheet' type='text/css'>
+<link rel="stylesheet/less" type="text/css" href="/less/elements-0.6.less" />
+<link rel="stylesheet/less" type="text/css" href="/less/theme-1.0.less" />
+<link rel="stylesheet/less" type="text/css" href="/less/main-1.0.less" />
+<script src="/js//underscore-1.3.1.min.js" type="text/javascript"></script>
+<script src="/js/jquery-1.7.1.min.js" type="text/javascript"></script>
+<script src="/js/less-1.3.0.min.js" type="text/javascript"></script>
+<script src="/js/handlebars-1.0.0.beta.6.js" type="text/javascript"></script>
+</head>
+<body>
+
+<div class="banner">
+  <h1>Red Flare</h1>
+  <h2>The Red Eclipse gaming monitor.</h2>
+</div>
+  
+<div id="content" class="content">
+  
+</div>
+
+<div class="footer">
+  <p>Website and monitoring by <a href="http://sustainablesoftware.com.au/">Sustainable Software Pty Ltd</a> (a.k.a Mulex).</p>
+  <p>Open source software on Github [TODO]</p>
+</div>
+
+<script id="listing-template" type="text/x-handlebars-template">
+<table class="serverlist">
+  <thead>
+    <th>players</th>
+    <th>full%</th>
+    <th>name</th>
+    <th>mutators</th>
+    <th>game</th>
+    <th>map</th>
+    <th>access</th>
+    <th>checked</th>
+  </thead>
+  <tbody>
+  {{#each reports}}
+  <tr class="server">
+    <td>{{clients}}</td>
+    <td>{{fullness}}</td>
+    <td><a href="redeclipse://{{host}}:{{port}}/">{{description}}</a></td>
+    <td style="text-align: right;">{{mutators}}</td>
+    <td>{{gameMode}}</td>
+    <td>{{mapName}}</td>
+    <td>{{masterMode}}</td>
+    <td>{{lastSeen}}</td>
+  </tr>
+  {{/each}}
+  </tbody>
+</table>
+</script>
+
+<script type="text/javascript"><!--
+
+"use strict";
+
+var listingTemplate = Handlebars.compile($("#listing-template").html());
+
+function loadLatestReport() {
+  var req = $.get('/lastreport');
+  req.success(function(reports) {
+    var reportList = _.map(
+      _.keys(reports),
+      function(key) {
+        var report = reports[key];
+        if (report.reported) {
+          report.lastSeen = '' + Math.round(((new Date()).getTime() - report.reported)/1000) + ' seconds ago';
+        }
+        report.fullness = '' + Math.round(report.clients/report.maxClients*100) + '%';
+        report.gameMode = report.gameMode;
+        report.mutators = report.mutators.join(' ');
+        return report;
+      }
+    );
+    $('#content').html(listingTemplate({reports : reportList}));
+  });
+}
+
+loadLatestReport();
+// -->
+</script>
+</body>
+</html>
