@@ -42,11 +42,11 @@
     <th>map</th>
     <th>ends in<br />(mins)</th>
     <th>access</th>
-    <th>last checked</th>
+    <th>seen</th>
   </thead>
   <tbody>
   {{#each reports}}
-  <tr class="{{cssClasses}}">
+  <tr class="server {{cssClasses}}">
     <td>{{clients}}</td>
     <td>{{fullness}}</td>
     <td><a href="redeclipse://{{host}}:{{port}}/">{{description}}</a></td>
@@ -56,6 +56,11 @@
     <td>{{remaining}}</td>
     <td>{{masterMode}}</td>
     <td>{{lastSeen}}</td>
+  </tr>
+  <tr class="players {{cssClasses}}">
+    <td></td>
+    <td></td>
+    <td colspan="7">{{names}}</td>
   </tr>
   {{/each}}
   </tbody>
@@ -80,7 +85,11 @@ function loadLatestReport() {
         report.gameMode = report.gameMode;
         report.mutators = report.mutators.join('-');
         report.remaining = Math.round(report.timeLeft/60);
-        var cssClasses = ["server"];
+        var playerNames = _.map(report.playerNames, function(name) {
+          return name.plain;
+        });
+        report.names = playerNames.join(', ');
+        var cssClasses = [];
         if (report.clients == 0) {
           cssClasses.push('empty');
         } else if (report.clients == report.maxClients) {
