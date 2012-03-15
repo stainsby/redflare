@@ -5,6 +5,7 @@ var net = require('net');
 var udp = require('dgram')
 var events = require('events');
 var _ = require('underscore');
+var geoip = require('geoip-lite');
 var config = require('./config');
 var protocol = require('./lib/protocol');
 
@@ -76,6 +77,7 @@ function processsServerReply(host, port, reply, batchId) {
     });
   }
   report.playerNames = playerNames;
+  report.country = geoip.lookup(host).country;
   
   return report;
 }
