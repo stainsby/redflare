@@ -74,7 +74,7 @@
 var listingTemplate = Handlebars.compile($("#listing-template").html());
 
 function loadLatestReport() {
-  var req = $.get('/lastreport');
+  var req = $.get('/reports');
   req.success(function(reports) {
     var reportList = _.map(
       _.keys(reports),

@@ -3,10 +3,10 @@
 var logger = require('nlogger').logger(module);
 var net = require('net');
 var udp = require('dgram')
-var config = require('./config');
-var protocol = require('./lib/protocol');
 var events = require('events');
 var _ = require('underscore');
+var config = require('./config');
+var protocol = require('./lib/protocol');
 
 
 var emitter = new events.EventEmitter();
