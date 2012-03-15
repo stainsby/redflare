@@ -4,13 +4,7 @@ var config = {
     port : 28800
   },
   pollingInterval : 60,
-  serverQueryThrottle : 1000,
-  database : {
-    name   : "redflare",
-    host   : "127.0.0.1",
-    port   : 5984,
-    secure : false
-  }
+  serverQueryThrottle : 1000
 };
 
 module.exports = config;

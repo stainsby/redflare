@@ -15,11 +15,12 @@ app.configure(function(){
     app.use(express.bodyParser());
     app.use(express.methodOverride());
     app.use(app.router);
-    app.use(express.static(__dirname + '/static', { maxAge: 10*60 })); // TODO: age
+    app.use(express.static(__dirname + '/static', { maxAge: 60*60 }));
 });
 
 app.get('/lastreport', function(req, res){
   res.setHeader('Content-Type', 'application/json');
+  res.setHeader('Cache-Control', 'public, max-age=' + 10);
   res.send(JSON.stringify(lastReport));
   res.end();
 });

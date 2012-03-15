@@ -1,7 +1,6 @@
 {
   "color" : false,
   "level" : {
-    "*": "debug"
+    "*": "info"
   }
 }
-
