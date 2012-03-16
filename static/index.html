@@ -32,7 +32,7 @@
 </div>
 
 <script id="listing-template" type="text/x-handlebars-template">
-  <h4>Active: {{playerCount}} players on {{serverCount}} servers</h4>
+  <h4>{{playerCount}} players on {{activeServerCount}} out of {{serverCount}} servers.</h4>
 <table class="serverlist">
   <thead>
     <th>players</th>
@@ -81,12 +81,14 @@ function loadLatestReport() {
   req.success(function(reports) {
     var playerCount = 0;
     var serverCount = 0;
+    var activeServerCount = 0;
     var reportList = _.map(
       _.keys(reports),
       function(key) {
         var report = reports[key];
         playerCount = playerCount + report.clients;
-        if (report.clients > 0) serverCount++;
+        serverCount++;
+        if (report.clients > 0) activeServerCount++;
         report.lastSeen = '' + prettyDate(-Math.round(((new Date()).getTime() - report.reported)/1000));
         report.fullness = '' + Math.round(report.clients/report.maxClients*100) + '%';
         report.gameMode = report.gameMode;
@@ -113,7 +115,8 @@ function loadLatestReport() {
       {
         reports : reportList,
         playerCount : playerCount,
-        serverCount : serverCount
+        serverCount : serverCount,
+        activeServerCount : activeServerCount
       }
     ));
   });
