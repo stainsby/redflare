@@ -27,14 +27,15 @@ poller.emitter.on('report', function(report) {
   reports[key] = report;
 });
 
-app.configure(function(){
+app.configure(function() {
     app.use(express.bodyParser());
     app.use(express.methodOverride());
     app.use(app.router);
+    app.use(express.static(__dirname + '/pages', { maxAge: 60*60 }));
     app.use(express.static(__dirname + '/static', { maxAge: 52*7*24*60*60 }));
 });
 
-app.get('/reports', function(req, res){
+app.get('/reports', function(req, res) {
   res.setHeader('Content-Type', 'application/json');
   res.setHeader('Cache-Control', 'public, max-age=' + 10);
   res.send(JSON.stringify(reports));
