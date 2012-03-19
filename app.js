@@ -31,7 +31,7 @@ app.configure(function(){
     app.use(express.bodyParser());
     app.use(express.methodOverride());
     app.use(app.router);
-    app.use(express.static(__dirname + '/static', { maxAge: 60*60 }));
+    app.use(express.static(__dirname + '/static', { maxAge: 52*7*24*60*60 }));
 });
 
 app.get('/reports', function(req, res){
@@ -43,4 +43,5 @@ app.get('/reports', function(req, res){
 
 setInterval(reapOldReports, config.reapInterval*1000);
 poller.startPollingMasterServer()
-app.listen(28080);
+logger.info('starting web UI on port: {}', config.httpPort)
+app.listen(config.httpPort);
