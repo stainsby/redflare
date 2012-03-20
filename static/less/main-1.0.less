@@ -51,6 +51,19 @@ div.clearfix {
   clear: both;
 }
 
+table th.header {
+  text-decoration: underline;
+  cursor: pointer; 
+}
+.headerSortUp, .headerSortDown {
+  font-style: italic;
+}
+.headerSortUp:after {
+  content: "\21d1";
+}
+.headerSortDown:after {
+  content: "\21d3";
+}
 tr.server.notopen {
   font-style: italic;
 }
@@ -60,7 +73,7 @@ tr.server.empty {
 tr.server.empty a {
   color: darken(@link-color, 12%);
 }
-tr.players {
+span.players {
   color: @player-color;
   font-size: 74%;
 }
