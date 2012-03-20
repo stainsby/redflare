@@ -36,9 +36,9 @@
   <h4>{{playerCount}} players on {{activeServerCount}} out of {{serverCount}} servers.</h4>
 <table class="serverlist">
   <thead>
-    <th>players</th>
     <th>full%</th>
     <th>name</th>
+    <th>players</th>
     <th>mutators</th>
     <th>game</th>
     <th>map</th>
@@ -50,14 +50,14 @@
   <tbody>
   {{#each reports}}
   <tr class="server {{cssClasses}}">
-    <td>{{clients}}</td>
-    <td>{{fullness}}</td>
+    <td class="full" style="border-right: solid {{heatColor}} 8px">{{fullness}}</td>
     <td class="name" style="width: 28em;">
       <a href="redeclipse://{{host}}:{{port}}/">{{description}}</a>
       {{#if names}}
       <br /><span class="players">{{names}}</span>
       {{/if}}
     </td>
+    <td class="players">{{clients}}</td>
     <td style="text-align: right;">{{mutators}}</td>
     <td>{{gameMode}}</td>
     <td>{{mapName}}</td>
@@ -92,7 +92,8 @@ function loadLatestReport() {
         serverCount++;
         if (report.clients > 0) activeServerCount++;
         report.lastSeen = '' + prettyDate(-Math.round(((new Date()).getTime() - report.reported)/1000));
-        report.fullness = '' + Math.round(report.clients/report.maxClients*100) + '%';
+        var fullness = report.clients/report.maxClients;
+        report.fullness = '' + Math.round(fullness*100) + '%';
         report.gameMode = report.gameMode;
         report.mutators = report.mutators.join('-');
         report.remaining = Math.round(report.timeLeft/60);
@@ -110,6 +111,18 @@ function loadLatestReport() {
           cssClasses.push('notopen');
         }
         report.cssClasses = cssClasses.join(' ');
+        var heatColorHSL = [
+          180 + Math.round(fullness*180),
+          '100%',
+          (20 + Math.round(fullness*60)) + '%'
+        ];
+        if (fullness == 0) {
+          report.heatColor = '#1c1c1c';
+        } else if (fullness == 1) {
+          report.heatColor = '#f00';
+        } else {
+          report.heatColor = 'hsl(' + heatColorHSL.join(', ') + ')';
+        }
         return report;
       }
     );
