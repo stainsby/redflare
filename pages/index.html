@@ -50,7 +50,7 @@
   <tbody>
   {{#each reports}}
   <tr class="server {{cssClasses}}">
-    <td class="full" style="border-right: solid {{heatColor}} 8px">{{fullness}}</td>
+    <td class="full" style="border-left: solid {{heatColor}} 8px">{{fullness}}</td>
     <td class="name" style="width: 28em;">
       <a href="redeclipse://{{host}}:{{port}}/">{{description}}</a>
       {{#if names}}
@@ -112,12 +112,12 @@ function loadLatestReport() {
         }
         report.cssClasses = cssClasses.join(' ');
         var heatColorHSL = [
-          180 + Math.round(fullness*180),
-          '100%',
-          (20 + Math.round(fullness*60)) + '%'
+          180 - Math.round(fullness*180),
+          (15 + Math.round(fullness*85)) + '%',
+          (10 + Math.round(fullness*40)) + '%'
         ];
         if (fullness == 0) {
-          report.heatColor = '#1c1c1c';
+          report.heatColor = '#161616';
         } else if (fullness == 1) {
           report.heatColor = '#f00';
         } else {
