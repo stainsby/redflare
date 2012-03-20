@@ -1,6 +1,7 @@
 "use strict";
 
-var listingTemplate = Handlebars.compile($("#listing-template").html());
+//var listingTemplate = Handlebars.compile($("#listing-template").html());
+var listingTemplate = null;
 var tableSortList = null;
 
 function loadLatestReport() {
@@ -71,5 +72,16 @@ function loadLatestReport() {
   });
 }
 
-loadLatestReport();
-setInterval(loadLatestReport, 15*1000);
+$(function($) {
+  $("link[type='application/x-handlebars-template']").each(function() {
+    var templateUrl = $(this).attr('href');
+    var templateName = $(this).data('template');
+    if (templateName == 'listing-template') {
+      $.get(templateUrl, function(data) {
+        listingTemplate = Handlebars.compile(data);
+        loadLatestReport();
+        setInterval(loadLatestReport, 15*1000);
+      });
+    }
+  });
+});

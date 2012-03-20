@@ -1,0 +1,36 @@
+<h4>{{playerCount}} players on {{activeServerCount}} out of {{serverCount}} servers.</h4>
+<table class="serverlist">
+  <thead>
+    <th>full%</th>
+    <th>name</th>
+    <th>players</th>
+    <th>mutators</th>
+    <th>game</th>
+    <th>map</th>
+    <th>ends in<br />(mins)</th>
+    <th>access</th>
+    <th>country</th>
+    <th>seen</th>
+  </thead>
+  <tbody>
+  {{#each reports}}
+  <tr class="server {{cssClasses}}">
+    <td class="full" style="border-left: solid {{heatColor}} 8px">{{fullness}}</td>
+    <td class="name" style="width: 28em;">
+      <a href="redeclipse://{{host}}:{{port}}/">{{description}}</a>
+      {{#if names}}
+      <br /><span class="players">{{names}}</span>
+      {{/if}}
+    </td>
+    <td class="players">{{clients}}</td>
+    <td style="text-align: right;">{{mutators}}</td>
+    <td>{{gameMode}}</td>
+    <td>{{mapName}}</td>
+    <td>{{remaining}}</td>
+    <td>{{masterMode}}</td>
+    <td>{{country}}</td>
+    <td>{{lastSeen}}</td>
+  </tr>
+  {{/each}}
+  </tbody>
+</table>

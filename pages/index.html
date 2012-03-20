@@ -8,6 +8,8 @@
 <link rel="stylesheet/less" type="text/css" href="/less/elements-0.6.less" />
 <link rel="stylesheet/less" type="text/css" href="/less/theme-1.0.less" />
 <link rel="stylesheet/less" type="text/css" href="/less/main-1.0.less" />
+<link rel="prefetch" type="application/x-handlebars-template"
+    href="/templates/listing_template-1.0.html" data-template="listing-template" />
 <script src="/js//underscore-1.3.1.min.js" type="text/javascript"></script>
 <script src="/js/jquery-1.7.1.min.js" type="text/javascript"></script>
 <script src="/js/less-1.3.0.min.js" type="text/javascript"></script>
@@ -17,59 +19,26 @@
 </head>
 <body>
 
-<div class="banner">
+<div id="banner" class="banner">
   <h1>Redflare</h1>
-  <h2>The <a href="http://www.redeclipse.net/" target="_blank">Red Eclipse</a> gaming monitor.
+  <h2>
+    The <a href="http://www.redeclipse.net/" target="_blank">Red Eclipse</a>
+    gaming monitor.
   </h2>
 </div>
   
 <div id="content" class="content">
-  
 </div>
 
-<div class="footer">
-  <p>Website and monitoring by <a href="http://sustainablesoftware.com.au/">Sustainable Software Pty Ltd</a> (a.k.a Mulex).</p>
-  <p>Redflare uses open source software &mdash; available on Github [TODO]</p>
+<div id="footer" class="footer">
+  <p>Website and monitoring by 
+    <a href="http://sustainablesoftware.com.au/">Sustainable Software Pty 
+      Ltd</a> (a.k.a Mulex).
+  </p>
+  <p>
+    Redflare uses open source software &mdash; available on Github [TODO]
+  </p>
 </div>
-
-<script id="listing-template" type="text/x-handlebars-template">
-  <h4>{{playerCount}} players on {{activeServerCount}} out of {{serverCount}} servers.</h4>
-<table class="serverlist">
-  <thead>
-    <th>full%</th>
-    <th>name</th>
-    <th>players</th>
-    <th>mutators</th>
-    <th>game</th>
-    <th>map</th>
-    <th>ends in<br />(mins)</th>
-    <th>access</th>
-    <th>country</th>
-    <th>seen</th>
-  </thead>
-  <tbody>
-  {{#each reports}}
-  <tr class="server {{cssClasses}}">
-    <td class="full" style="border-left: solid {{heatColor}} 8px">{{fullness}}</td>
-    <td class="name" style="width: 28em;">
-      <a href="redeclipse://{{host}}:{{port}}/">{{description}}</a>
-      {{#if names}}
-      <br /><span class="players">{{names}}</span>
-      {{/if}}
-    </td>
-    <td class="players">{{clients}}</td>
-    <td style="text-align: right;">{{mutators}}</td>
-    <td>{{gameMode}}</td>
-    <td>{{mapName}}</td>
-    <td>{{remaining}}</td>
-    <td>{{masterMode}}</td>
-    <td>{{country}}</td>
-    <td>{{lastSeen}}</td>
-  </tr>
-  {{/each}}
-  </tbody>
-</table>
-</script>
 
 <script src="/scripts/report_loader-1.0.js" type="text/javascript"></script>
 
