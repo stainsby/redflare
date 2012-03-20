@@ -32,7 +32,7 @@ app.configure(function() {
     app.use(express.methodOverride());
     app.use(app.router);
     app.use(express.static(__dirname + '/pages', { maxAge: 60*60 }));
-    app.use(express.static(__dirname + '/static', { maxAge: 52*7*24*60*60 }));
+    app.use(express.static(__dirname + '/static', { maxAge: 3*24*60*60 }));
 });
 
 app.get('/reports', function(req, res) {
