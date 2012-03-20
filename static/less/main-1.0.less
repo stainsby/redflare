@@ -43,17 +43,20 @@ a:hover {
 a:visited {
   color: @link-color;
 }
-th, td {
-  padding: 0 4px 0 4px;
-}
 
 div.clearfix {
   clear: both;
 }
 
+table {
+  border-spacing: 0.4em;
+}
 table th.header {
   text-decoration: underline;
   cursor: pointer; 
+}
+th, td {
+  padding: 0 4px 0 4px;
 }
 .headerSortUp, .headerSortDown {
   font-style: italic;
@@ -64,6 +67,9 @@ table th.header {
 .headerSortDown:after {
   content: "\21d3";
 }
+tr.server {
+  line-height: 1.0em;
+}
 tr.server.notopen {
   font-style: italic;
 }
@@ -72,6 +78,13 @@ tr.server.empty {
 }
 tr.server.empty a {
   color: darken(@link-color, 12%);
+}
+
+tr.server td.name {
+  border-left: solid red 4px;
+}
+tr.server.empty td.name {
+  border-left: 0;
 }
 span.players {
   color: @player-color;
