@@ -8,10 +8,10 @@ server.
 
 # Installing
 
-The website runs as a node.js application. Ensure node.js is installed,
+The website runs as a `node.js` application. Ensure `node.js` is installed,
 clone the git repository, and in the top-level:
 
-    npm install geoip-lite nlogger underscore
+    npm install express geoip-lite nlogger underscore
 
 to install the dependencies.
 
@@ -21,9 +21,12 @@ Run with:
 
     node ./apps.js
 
-For the production site, we use 'forever' to run the site.
+In production, we use nodejitsu's `forever` tool to run the site.
+
+By default, the web UI will listen on port 28080. Edit `config.js` to
+change this and other settings.
 
 # Copyright
 
-Copyright 2012 Sustainable Software Pty Ltd. All files in the Redflare 
+Copyright &copy; 2012 Sustainable Software Pty Ltd. All files in the Redflare 
 project are licensed under the GNU Affero General Public License version 3.
