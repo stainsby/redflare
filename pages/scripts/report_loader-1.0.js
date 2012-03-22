@@ -19,6 +19,7 @@ function loadLatestReport() {
         if (report.clients > 0) activeServerCount++;
         report.lastSeen = '' + prettyDate(-Math.round(((new Date()).getTime() - report.reported)/1000));
         var fullness = report.clients/report.maxClients;
+        if (fullness > 1) fullness = 1; // maxClients doesn't count admins
         report.fullness = '' + Math.round(fullness*100) + '%';
         report.gameMode = report.gameMode;
         report.mutators = report.mutators.join('-');
