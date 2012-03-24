@@ -22,7 +22,7 @@ function loadLatestReport() {
         if (fullness > 1) fullness = 1; // maxClients doesn't count admins
         report.fullness = '' + Math.round(fullness*100) + '%';
         report.gameMode = report.gameMode;
-        report.mutators = report.mutators.join('-');
+        report.mutators = report.mutators.join(' ');
         report.remaining = Math.round(report.timeLeft/60);
         var playerNames = _.map(report.playerNames, function(name) {
           return name.plain;
