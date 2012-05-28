@@ -11,7 +11,7 @@ server.
 The website runs as a `node.js` application. Ensure `node.js` is installed,
 clone the git repository, and in the top-level:
 
-    npm install express geoip-lite nlogger underscore
+    npm install
 
 to install the dependencies.
 
