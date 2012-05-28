@@ -2,7 +2,7 @@
 
 var logger = require('nlogger').logger(module);
 var net = require('net');
-var udp = require('dgram')
+var udp = require('dgram');
 var events = require('events');
 var _ = require('underscore');
 var geoip = require('geoip-lite');
@@ -85,20 +85,28 @@ function processsServerReply(host, port, reply, batchId) {
 
 function startServerQuery(host, port, batchId) {
   logger.info('checking status of server: {}:{}', host, port);
-  var query = new Buffer(5);
-  query.writeUInt8(0x81, 0);
-  query.writeUInt8(0xec, 1);
-  query.writeUInt8(0x04, 2);
-  query.writeUInt8(0x01, 3);
-  query.writeUInt8(0x00, 4);
-  var client = udp.createSocket('udp4');
-  client.on('message', function (reply) {
-    client.close();
-    var report = processsServerReply(host, port, reply, batchId);
-    logger.debug('report: {}', JSON.stringify(report));
-    emitter.emit('report', report);
-  });
-  client.send(query, 0, query.length, port, host);
+  try {
+    var query = new Buffer(5);
+    query.writeUInt8(0x81, 0);
+    query.writeUInt8(0xec, 1);
+    query.writeUInt8(0x04, 2);
+    query.writeUInt8(0x01, 3);
+    query.writeUInt8(0x00, 4);
+    var client = udp.createSocket('udp4');
+    client.on('message', function (reply) {
+      client.close();
+      try {
+        var report = processsServerReply(host, port, reply, batchId);
+        logger.debug('report: {}', JSON.stringify(report));
+        return emitter.emit('report', report);
+      }  catch(err) {
+        return logger.warn('server reply processing failed: ', err);
+      }
+    });
+    return client.send(query, 0, query.length, port, host);
+  } catch(err) {
+    return logger.warn('server query failed: ', err);
+  }
 }
 
 
