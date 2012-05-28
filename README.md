@@ -19,7 +19,7 @@ to install the dependencies.
 
 Run with:
 
-    node ./apps.js
+    node ./app.js
 
 In production, we use nodejitsu's `forever` tool to run the site.
 
