@@ -42,7 +42,7 @@ app.get('/reports', function(req, res) {
   res.end();
 });
 
-setInterval(reapOldReports, config.reapInterval*1000);
-poller.startPollingMasterServer()
 logger.info('starting web UI on port: {}', config.httpPort)
 app.listen(config.httpPort);
+poller.startPollingMasterServer();
+setInterval(reapOldReports, config.reapInterval*1000);
