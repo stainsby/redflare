@@ -5,7 +5,9 @@ var net = require('net');
 var udp = require('dgram');
 var events = require('events');
 var _ = require('underscore');
+var async = require('async');
 var geoip = require('geoip-lite');
+
 var config = require('./config');
 var protocol = require('./lib/protocol');
 
@@ -83,29 +85,55 @@ function processsServerReply(host, port, reply, batchId) {
 }
 
 
-function startServerQuery(host, port, batchId) {
+function startServerQuery(host, port, batchId, andThen) {
   logger.info('checking status of server: {}:{}', host, port);
   try {
+    var client = null;
     var query = new Buffer(5);
     query.writeUInt8(0x81, 0);
     query.writeUInt8(0xec, 1);
     query.writeUInt8(0x04, 2);
     query.writeUInt8(0x01, 3);
     query.writeUInt8(0x00, 4);
-    var client = udp.createSocket('udp4');
+    client = udp.createSocket('udp4');
     client.on('message', function (reply) {
       client.close();
+      client = null;
       try {
+        logger.info('  .. procesing server reply for: {}:{}', host, port);
         var report = processsServerReply(host, port, reply, batchId);
         logger.debug('report: {}', JSON.stringify(report));
-        return emitter.emit('report', report);
+        emitter.emit('report', report);
+        andThen();
       }  catch(err) {
-        return logger.warn('server reply processing failed: ', err);
+        logger.warn('server reply processing failed: ', err);
+        andThen();
       }
     });
-    return client.send(query, 0, query.length, port, host);
+    client.on('error', function (err) {
+      client.close();
+      client = null;
+      logger.warn('server connection failed: ', err);
+      andThen();
+    });
+    client.send(query, 0, query.length, port, host);
+    // manually implement a UPD socket "timeout"
+    var closeSocket = function() {
+      if (client != null) {
+        logger.warn('server query timed out');
+        client.close();
+        client = null;
+        andThen();
+      }
+    }
+    setTimeout(closeSocket, 2000)
   } catch(err) {
-    return logger.warn('server query failed: ', err);
+    logger.warn('server query failed with uncaught error: ', err);
+    if (client != null) {
+      client.close();
+      client = null;
+    }
+    andThen();
   }
 }
 
@@ -137,15 +165,19 @@ function pollMasterServer() {
       });
       logger.info('found {} servers', servers.length);
       var batchId = (new Date()).toISOString();
-      function queryNext() {
-        if (servers.length > 0) {
-          var server = servers[0];
-          startServerQuery(server[0], server[1] + 1, batchId);
-          servers.shift();
-          setTimeout(queryNext, config.serverQueryThrottle);
+      async.forEachSeries(
+        servers,
+        function(server, andThen) {
+          startServerQuery(server[0], server[1] + 1, batchId, andThen);
+        },
+        function(err) {
+          if (err) {
+            logger.error('while checking servers: {}', err);
+          } else {
+            logger.info('servers checked');
+          }
         }
-      }
-      queryNext();
+      )
     });
     client.write('update\n');
   } catch (err) {

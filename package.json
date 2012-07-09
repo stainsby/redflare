@@ -6,6 +6,7 @@
   "main" : "app.js",
   "node" : "0.6.x",
   "dependencies" : {
+    "async" : "0.x",
     "express" : "2.x",
     "geoip-lite" : "1.x",
     "nlogger" : "0.x",
