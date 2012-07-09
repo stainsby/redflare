@@ -35,6 +35,10 @@ app.configure(function() {
     app.use(express.static(__dirname + '/static', { maxAge: 3*24*60*60 }));
 });
 
+app.configure(function(){
+    app.use(express.errorHandler({ dumpExceptions: true, showStack: true }));
+});
+
 app.get('/reports', function(req, res) {
   res.setHeader('Content-Type', 'application/json');
   res.setHeader('Cache-Control', 'public, max-age=' + 10);
