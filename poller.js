@@ -14,10 +14,24 @@ var protocol = require('./lib/protocol');
 
 var emitter = new events.EventEmitter();
 
+var colorCodePrefix = '\f';
+function uncolorString(str)  {
+  var i = str.indexOf(colorCodePrefix);
+  if (i == -1) return str; // quick return if no color codes
+  var filtered = '';
+  while (i >= 0) {
+    filtered = filtered + str.slice(0, i);
+    str = str.slice(i + 2);
+    i = str.indexOf(colorCodePrefix);
+  }
+  return filtered;
+}
 
-var colorPrefix = '\fs\f';
-function uncolorString(name)  {
-  if (name.indexOf(colorPrefix) == 0) {
+
+// replace this with 'uncolorString' at some point
+var nameColorPrefix = '\fs\f';
+function uncolorPlayerName(name)  {
+  if (name.indexOf(nameColorPrefix) == 0) {
     var start = name.indexOf(']') + 1;
     return name.slice(start).slice(0, -2);
   } else {
@@ -59,23 +73,32 @@ function processsServerReply(host, port, reply, batchId) {
   report.clients = stream.readNextInt();
   stream.readNextInt(); // reads no. of args following - not used
   report.gameVersion = stream.readNextInt();
-  report.gameMode = protocol.gameModeFromCode(stream.readNextInt());
+  var versionStr = '[unknown version]';
+  var proto = null;
+  if (report.gameVersion === 214) {
+    versionStr = '[Cosmic]';
+    proto = new protocol.Protocol214();
+  } else if (report.gameVersion === 217) {
+    proto = new protocol.Protocol217();
+    versionStr = '';
+  }
+  report.gameMode = proto ? proto.gameModeFromCode(stream.readNextInt()) : '???';
   var mutators = stream.readNextInt()
   report.mutatorFlags = mutators;
-  report.mutators = protocol.mutatorsFromFlags(mutators);
+  report.mutators = proto ? proto.mutatorsFromFlags(mutators) : '???';
   report.timeLeft = stream.readNextInt();
   report.maxClients = stream.readNextInt();
-  report.masterMode = protocol.masterModeFromCode(stream.readNextInt());
+  report.masterMode = proto ? proto.masterModeFromCode(stream.readNextInt()) : '???';
   report.variableCount = stream.readNextInt();
   report.modificationCount = stream.readNextInt();
   report.mapName = stream.readNextString();
-  report.description = stream.readNextString();
+  report.description = uncolorString(stream.readNextString()) + (versionStr ? ' ' + versionStr : '');
   var playerNames = [];
   for (var i = 0; i < report.clients; i++) {
     var rawName = stream.readNextString();
     playerNames.push({
       raw : rawName,
-      plain : uncolorString(rawName)
+      plain : uncolorPlayerName(rawName)
     });
   }
   report.playerNames = playerNames;
