@@ -15,9 +15,25 @@ var protocol = require('./lib/protocol');
 var emitter = new events.EventEmitter();
 
 
-var colorPrefix = '\fs\f';
-function uncolorString(name)  {
-  if (name.indexOf(colorPrefix) == 0) {
+var colorCodePrefix = '\f';
+function uncolorString(str)  {
+  var i = str.indexOf(colorCodePrefix);
+  if (i == -1) return str; // quick return if no color codes
+  var filtered = '';
+  var i = str.indexOf(colorCodePrefix);
+  while (i >= 0) {
+    filtered = filtered + str.slice(0, i);
+    str = str.slice(i + 2);
+    i = str.indexOf(colorCodePrefix);
+  }
+  return filtered;
+}
+
+
+// replace this with 'uncolorString' at some point
+var nameColorPrefix = '\fs\f';
+function uncolorPlayerName(name)  {
+  if (name.indexOf(nameColorPrefix) == 0) {
     var start = name.indexOf(']') + 1;
     return name.slice(start).slice(0, -2);
   } else {
@@ -69,13 +85,13 @@ function processsServerReply(host, port, reply, batchId) {
   report.variableCount = stream.readNextInt();
   report.modificationCount = stream.readNextInt();
   report.mapName = stream.readNextString();
-  report.description = stream.readNextString();
+  report.description = uncolorString(stream.readNextString());
   var playerNames = [];
   for (var i = 0; i < report.clients; i++) {
     var rawName = stream.readNextString();
     playerNames.push({
       raw : rawName,
-      plain : uncolorString(rawName)
+      plain : uncolorPlayerName(rawName)
     });
   }
   report.playerNames = playerNames;
