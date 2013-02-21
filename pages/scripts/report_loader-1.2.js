@@ -1,9 +1,12 @@
 "use strict";
 
-//var listingTemplate = Handlebars.compile($("#listing-template").html());
-var listingTemplate = null;
 var tableSortList = null;
 
+/**
+ * Places listing into the '#content' element using 'listingTemplate', which
+ * is loaded by the template loader script elsewhere.
+ * Also requires tablesorter extension.
+ */
 function loadLatestReport() {
   var req = $.get('/reports');
   req.success(function(reports) {
@@ -57,6 +60,8 @@ function loadLatestReport() {
         return report;
       }
     );
+    // pre-sort list for use in mobile UI
+    reportList = _.sortBy(reportList, function(report) { return -report.clients; })
     $('#content').html(listingTemplate(
       {
         reports : reportList,
@@ -76,17 +81,3 @@ function loadLatestReport() {
     });
   });
 }
-
-$(function($) {
-  $("link[type='application/x-handlebars-template']").each(function() {
-    var templateUrl = $(this).attr('href');
-    var templateName = $(this).data('template');
-    if (templateName == 'listing-template') {
-      $.get(templateUrl, function(data) {
-        listingTemplate = Handlebars.compile(data);
-        loadLatestReport();
-        setInterval(loadLatestReport, 15*1000);
-      });
-    }
-  });
-});

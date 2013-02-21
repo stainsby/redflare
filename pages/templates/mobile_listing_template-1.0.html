@@ -1,0 +1,56 @@
+<h4>{{playerCount}} players on {{activeServerCount}} out of {{serverCount}} servers.</h4>
+
+{{#each reports}}
+<div class="tile" style="padding: 0.4em 0.8em 0.4em 0.4em; border-bottom: dotted #333 1px">
+  <div class="left" style="line-height: 2em; float: left; padding: 0.4em; width: 4em; text-align: center; overflow: hidden; border-left: solid {{heatColor}} 8px">
+    <span class="players" style="font-size: 200%; text-shadow: 3px 3px 4px black">{{clients}}</span><br />
+    <span class="players">players</span>
+  </div>
+    <span class="name"><a href="redeclipse://{{host}}:{{port}}/">{{description}}</a></span>
+    <br />
+    {{mutators}} {{gameMode}} on '{{mapName}}'
+    {{#if names}}
+      <br />
+      <span class="players">{{names}}</span>
+    {{/if}}
+  <div style="clear: both"></div>
+</div>
+{{/each}}
+
+<!--
+<table class="serverlist">
+  <thead>
+    <th>full%</th>
+    <th>name</th>
+    <th>players</th>
+    <th>mutators</th>
+    <th>game</th>
+    <th>map</th>
+    <th>ends in<br />(mins)</th>
+    <th>access</th>
+    <th>country</th>
+    <th>seen</th>
+  </thead>
+  <tbody>
+  {{#each reports}}
+  <tr class="server {{cssClasses}}">
+    <td class="full" style="border-left: solid {{heatColor}} 8px">{{fullness}}</td>
+    <td class="name" style="width: 28em;">
+      <a href="redeclipse://{{host}}:{{port}}/">{{description}}</a>
+      {{#if names}}
+        <br /><span class="players">{{names}}</span>
+      {{/if}}
+    </td>
+    <td class="players">{{clients}}</td>
+    <td style="text-align: right;">{{mutators}}</td>
+    <td>{{gameMode}}</td>
+    <td>{{mapName}}</td>
+    <td>{{remaining}}</td>
+    <td>{{masterMode}}</td>
+    <td>{{country}}</td>
+    <td>{{lastSeen}}</td>
+  </tr>
+  {{/each}}
+  </tbody>
+</table>
+-->
