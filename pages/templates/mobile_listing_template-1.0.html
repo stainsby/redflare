@@ -2,8 +2,19 @@
 
 {{#each reports}}
 <div class="tile" style="padding: 0.4em 0.8em 0.4em 0.4em; border-bottom: dotted #333 1px">
-  <div class="left" style="line-height: 2em; float: left; padding: 0.4em; width: 4em; text-align: center; overflow: hidden; border-left: solid {{heatColor}} 8px">
-    <span class="players" style="font-size: 200%; text-shadow: 3px 3px 4px black">{{clients}}</span><br />
+  <div class="left" style="
+      line-height: 2em;
+      float: left; padding: 0.4em;
+      width: 4em;
+      text-align: center;
+      overflow: hidden;
+      border-left: solid {{heatColor}} 8px;
+      background: -webkit-linear-gradient(left, {{heatColor}}, #111);
+      background: -moz-linear-gradient(left, {{heatColor}}, #111);
+      background: -o-linear-gradient(left, {{heatColor}}, #111);
+      background: -ms-linear-gradient(left, {{heatColor}}, #111);
+      text-shadow: 3px 3px 4px black;">
+    <span class="players" style="font-size: 200%">{{clients}}</span><br />
     <span class="players">players</span>
   </div>
     <span class="name"><a href="redeclipse://{{host}}:{{port}}/">{{description}}</a></span>
