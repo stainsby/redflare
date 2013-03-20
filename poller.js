@@ -86,14 +86,17 @@ function processsServerReply(host, port, reply, batchId) {
   report.clients = stream.readNextInt();
   stream.readNextInt(); // reads no. of args following - not used
   report.gameVersion = stream.readNextInt();
-  var versionStr = '[unknown version]';
+  var versionStr = '[unknown version (' + report.gameVersion + ')]';
   var proto = null;
   if (report.gameVersion === 214) {
-    versionStr = '[Cosmic]';
+    versionStr = '[OLD]';
     proto = new protocol.Protocol214();
   } else if (report.gameVersion === 217) {
     proto = new protocol.Protocol217();
-    versionStr = '';
+    versionStr = '[RE 1.3]';
+  } else if (report.gameVersion === 220) {
+    proto = new protocol.Protocol220();
+    versionStr = '[RE 1.4]';
   }
   report.gameMode = proto ? proto.gameModeFromCode(stream.readNextInt()) : '???';
   var mutators = stream.readNextInt()
