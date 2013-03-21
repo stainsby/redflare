@@ -43,13 +43,19 @@ function uncolorString(str)  {
 
 // replace this with 'uncolorString' at some point
 var nameColorPrefix = '\fs\f';
-function uncolorPlayerName(name)  {
+var privatePrefix = "\f($";
+function stripString(name, versionId)  {
+	// strip colour codes
   if (name.indexOf(nameColorPrefix) == 0) {
     var start = name.indexOf(']') + 1;
-    return name.slice(start).slice(0, -2);
-  } else {
-    return name;
+    name = name.slice(start).slice(0, -2);
   }
+  // strip private data (icons, etc.)
+  if (name.indexOf(privatePrefix) == 0) {
+    var start = name.indexOf(']') + 1;
+    name = name.slice(start);
+  }
+  return name;
 }
 
 
@@ -114,7 +120,7 @@ function processsServerReply(host, port, reply, batchId) {
     var rawName = stream.readNextString();
     playerNames.push({
       raw : rawName,
-      plain : uncolorPlayerName(rawName)
+      plain : stripString(rawName, report.gameVersion)
     });
   }
   report.playerNames = playerNames;
