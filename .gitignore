@@ -1,4 +1,5 @@
 /node_modules/
 /env
 /.project
-
+node_modules
+npm-debug.log
