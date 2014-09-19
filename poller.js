@@ -134,7 +134,7 @@ function processsServerReply(host, port, reply, batchId) {
 
 
 function startServerQuery(host, port, batchId, andThen) {
-  logger.info('checking status of server: {}:{}', host, port);
+  logger.info('checking status of server: ', host, port);
   try {
     var client = null;
     var query = new Buffer(5);
@@ -148,9 +148,9 @@ function startServerQuery(host, port, batchId, andThen) {
       client.close();
       client = null;
       try {
-        logger.info('  .. procesing server reply for: {}:{}', host, port);
+        logger.info('  .. procesing server reply for: ', host, port);
         var report = processsServerReply(host, port, reply, batchId);
-        logger.debug('report: {}', JSON.stringify(report));
+        logger.debug('report: ', JSON.stringify(report));
         emitter.emit('report', report);
         andThen();
       }  catch(err) {
@@ -214,7 +214,7 @@ function pollMasterServer() {
           servers.push([parts[1], parseInt(parts[2])]);
         }
       });
-      logger.info('found {} servers', servers.length);
+      logger.info('found servers: ', servers.length);
       var batchId = (new Date()).toISOString();
       async.forEachSeries(
         servers,
@@ -223,7 +223,7 @@ function pollMasterServer() {
         },
         function(err) {
           if (err) {
-            logger.error('while checking servers: {}', err);
+            logger.error('while checking servers: ', err);
           } else {
             logger.info('servers checked');
           }
@@ -232,7 +232,7 @@ function pollMasterServer() {
     });
     client.write('update\n');
   } catch (err) {
-    logger.error('while polling master server: {}', err);
+    logger.error('while polling master server: ', err);
   }
 }
 
