@@ -127,7 +127,12 @@ function processsServerReply(host, port, reply, batchId) {
     });
   }
   report.playerNames = playerNames;
-  report.country = geoip.lookup(host).country;
+  
+  var geoipInfo = geoip.lookup(host);
+  // sometimes this is null - maybe indicate outdated geoip DB
+  if (geoipInfo) {
+    report.country = geoip.lookup(host).country;
+  }
   
   return report;
 }
