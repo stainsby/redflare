@@ -198,6 +198,9 @@ function pollMasterServer() {
     client.on('data', function(data) {
       allData = allData + data;
     });
+    client.on('error', function(err) {
+      logger.error('master server may be down');
+    });
     client.on('end', function() {
       logger.debug('polling socket closed normally');
       var servers = [];
