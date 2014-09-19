@@ -1,4 +1,6 @@
-"use strict";
+'use strict';
+/* jshint node: true */
+
 
 var logger = require('nlogger').logger(module);
 var express = require('express');
@@ -11,7 +13,7 @@ var reports = {};
 
 
 function reapOldReports() {
-  logger.info('starting reap cycle on {} reports', _.keys(reports).length);
+  logger.info('starting reap cycle on reports: ', _.keys(reports).length);
   _.each(_.keys(reports), function(key) {
     var report = reports[key];
     var age = Math.round(((new Date()).getTime() - report.reported)/1000);
@@ -47,7 +49,7 @@ app.get('/reports', function(req, res) {
   res.end();
 });
 
-logger.info('starting web UI on port: {}', config.httpPort)
+logger.info('starting web UI on port: ', config.httpPort);
 app.listen(config.httpPort);
 poller.startPollingMasterServer();
 setInterval(reapOldReports, config.reapInterval*1000);

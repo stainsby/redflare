@@ -1,4 +1,6 @@
-"use strict";
+'use strict';
+/* jshint node: true */
+
 
 var logger = require('nlogger').logger(module);
 var net = require('net');
@@ -32,7 +34,7 @@ function uncolorString(str)  {
   var i = str.indexOf(colorCodePrefix);
   if (i == -1) return str; // quick return if no color codes
   var filtered = '';
-  var i = str.indexOf(colorCodePrefix);
+  i = str.indexOf(colorCodePrefix);
   while (i >= 0) {
     filtered = filtered + str.slice(0, i);
     str = str.slice(i + 2);
@@ -46,13 +48,14 @@ var nameColorPrefix = '\fs\f';
 var privatePrefix = "\f($";
 function stripString(name, versionId)  {
 	// strip colour codes
-  if (name.indexOf(nameColorPrefix) == 0) {
-    var start = name.indexOf(']') + 1;
+  var start;
+  if (name.indexOf(nameColorPrefix) === 0) {
+    start = name.indexOf(']') + 1;
     name = name.slice(start).slice(0, -2);
   }
   // strip private data (icons, etc.)
-  if (name.indexOf(privatePrefix) == 0) {
-    var start = name.indexOf(']') + 1;
+  if (name.indexOf(privatePrefix) === 0) {
+    start = name.indexOf(']') + 1;
     name = name.slice(start);
   }
   return name;
@@ -105,7 +108,7 @@ function processsServerReply(host, port, reply, batchId) {
     versionStr = '[RE 1.4]';
   }
   report.gameMode = proto ? proto.gameModeFromCode(stream.readNextInt()) : '???';
-  var mutators = stream.readNextInt()
+  var mutators = stream.readNextInt();
   report.mutatorFlags = mutators;
   report.mutators = proto ? proto.mutatorsFromFlags(mutators) : '???';
   report.timeLeft = stream.readNextInt();
@@ -164,17 +167,17 @@ function startServerQuery(host, port, batchId, andThen) {
     client.send(query, 0, query.length, port, host);
     // manually implement a UPD socket "timeout"
     var closeSocket = function() {
-      if (client != null) {
+      if (client !== null) {
         logger.warn('server query timed out');
         client.close();
         client = null;
         andThen();
       }
-    }
-    setTimeout(closeSocket, 2000)
+    };
+    setTimeout(closeSocket, 2000);
   } catch(err) {
     logger.warn('server query failed with uncaught error: ', err);
-    if (client != null) {
+    if (client !== null) {
       client.close();
       client = null;
     }
@@ -206,7 +209,7 @@ function pollMasterServer() {
       var servers = [];
       var lines = allData.split('\n');
       _.each(lines, function(line) {
-        if (line.indexOf('addserver ') == 0) {
+        if (line.indexOf('addserver ') === 0) {
           var parts = line.split(' ');
           servers.push([parts[1], parseInt(parts[2])]);
         }
@@ -225,7 +228,7 @@ function pollMasterServer() {
             logger.info('servers checked');
           }
         }
-      )
+      );
     });
     client.write('update\n');
   } catch (err) {
