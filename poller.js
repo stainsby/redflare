@@ -106,6 +106,9 @@ function processsServerReply(host, port, reply, batchId) {
   } else if (report.gameVersion === 220) {
     proto = new protocol.Protocol220();
     versionStr = '[RE 1.4]';
+  } else {
+    proto = new protocol.Protocol220();
+    versionStr = '';
   }
   report.gameMode = proto ? proto.gameModeFromCode(stream.readNextInt()) : '???';
   var mutators = stream.readNextInt();
