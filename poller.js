@@ -137,7 +137,7 @@ function processsServerReply(host, port, reply, batchId) {
     var vermaj = stream.readNextInt();
     var vermin = stream.readNextInt();
     var verpat = stream.readNextInt();
-    versionStr = '[RE ' + varmaj + '.' + vermin + '.' + verpat + ']';
+    versionStr = '[RE ' + vermaj + '.' + vermin + '.' + verpat + ']';
   }
   while(count > 0) {
     stream.readNextInt();
