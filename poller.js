@@ -93,8 +93,10 @@ function processsServerReply(host, port, reply, batchId) {
   report.port = port - 1;
   report.reported = reported.getTime();
   report.clients = stream.readNextInt();
-  stream.readNextInt(); // reads no. of args following - not used
+  
+  var count = stream.readNextInt(); // reads no. of args following - not used
   report.gameVersion = stream.readNextInt();
+  count--;
   var versionStr = '[unknown version (' + report.gameVersion + ')]';
   var proto = null;
   if (report.gameVersion === 214) {
@@ -106,19 +108,41 @@ function processsServerReply(host, port, reply, batchId) {
   } else if (report.gameVersion === 220) {
     proto = new protocol.Protocol220();
     versionStr = '[RE 1.4]';
+  } else if (report.gameVersion === 226) {
+    proto = new protocol.Protocol226();
+    versionStr = '[RE 1.5]';
   } else {
-    proto = new protocol.Protocol220();
+    proto = new protocol.Protocol226();
     versionStr = '';
   }
-  report.gameMode = proto ? proto.gameModeFromCode(stream.readNextInt()) : '???';
+  var gamemode = stream.readNextInt();
+  count--;
+  report.gameMode = proto ? proto.gameModeFromCode(gamemode) : '???';
   var mutators = stream.readNextInt();
+  count--;
   report.mutatorFlags = mutators;
   report.mutators = proto ? proto.mutatorsFromFlags(mutators) : '???';
   report.timeLeft = stream.readNextInt();
+  count--;
   report.maxClients = stream.readNextInt();
-  report.masterMode = proto ? proto.masterModeFromCode(stream.readNextInt()) : '???';
+  count--;
+  var mastermode = stream.readNextInt();
+  report.masterMode = proto ? proto.masterModeFromCode(mastermode) : '???';
+  count--;
   report.variableCount = stream.readNextInt();
+  count--;
   report.modificationCount = stream.readNextInt();
+  count--;
+  if (report.gameVersion >= 226) {
+    var vermaj = stream.readNextInt();
+    var vermin = stream.readNextInt();
+    var verpat = stream.readNextInt();
+    versionStr = '[RE ' + vermaj + '.' + vermin + '.' + verpat + ']';
+  }
+  while(count > 0) {
+    stream.readNextInt();
+    count--;
+  }
   report.mapName = stream.readNextString();
   report.description = uncolorString(stream.readNextString()) + (versionStr ? ' ' + versionStr : '');
   var playerNames = [];
@@ -130,7 +154,17 @@ function processsServerReply(host, port, reply, batchId) {
     });
   }
   report.playerNames = playerNames;
-  
+  if (report.gameVersion >= 226) {
+      var authNames = [];
+      for (var i = 0; i < report.clients; i++) {
+        var rawName = stream.readNextString();
+        authNames.push({
+          raw : rawName,
+          plain : stripString(rawName, report.gameVersion)
+        });
+      }
+      report.authNames = authNames;
+    }
   var geoipInfo = geoip.lookup(host);
   // sometimes this is null - maybe indicate outdated geoip DB
   if (geoipInfo) {
