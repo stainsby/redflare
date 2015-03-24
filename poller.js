@@ -114,9 +114,9 @@ function processsServerReply(host, port, reply, batchId) {
     proto = new protocol.Protocol226();
     versionStr = '';
   }
-  var gamemode = stream.readNextInt();
+  var gameMode = stream.readNextInt();
   count--;
-  report.gameMode = proto ? proto.gameModeFromCode(gamemode) : '???';
+  report.gameMode = proto ? proto.gameModeFromCode(gameMode) : '???';
   var mutators = stream.readNextInt();
   count--;
   report.mutatorFlags = mutators;
@@ -125,19 +125,20 @@ function processsServerReply(host, port, reply, batchId) {
   count--;
   report.maxClients = stream.readNextInt();
   count--;
-  var mastermode = stream.readNextInt();
-  report.masterMode = proto ? proto.masterModeFromCode(mastermode) : '???';
+  var masterMode = stream.readNextInt();
+  report.masterMode = proto ? proto.masterModeFromCode(masterMode) : '???';
   count--;
   report.variableCount = stream.readNextInt();
   count--;
   report.modificationCount = stream.readNextInt();
   count--;
   if (report.gameVersion >= 226) {
-    var vermaj = stream.readNextInt();
-    var vermin = stream.readNextInt();
-    var verpat = stream.readNextInt();
+    var majorVersion = stream.readNextInt();
+    var minorVersion = stream.readNextInt();
+    var patchVersion = stream.readNextInt();
     count = count - 3;
-    versionStr = '[RE ' + vermaj + '.' + vermin + '.' + verpat + ']';
+    versionStr =
+      '[RE ' + majorVersion + '.' + minorVersion + '.' + patchVersion + ']';
   }
   while(count > 0) {
    stream.readNextInt();
