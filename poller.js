@@ -146,6 +146,9 @@ function processsServerReply(host, port, reply, batchId) {
   }
   report.mapName = stream.readNextString();
   report.description = uncolorString(stream.readNextString()) + (versionStr ? ' ' + versionStr : '');
+  if (report.gameVersion >= 227) {
+    report.versionbranch = stream.readNextString();
+  }
   var playerNames = [];
   for (var i = 0; i < report.clients; i++) {
     var rawName = stream.readNextString();
