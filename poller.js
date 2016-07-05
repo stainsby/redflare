@@ -103,13 +103,13 @@ function processsServerReply(host, port, reply, batchId) {
     proto = new protocol.Protocol214();
   } else if (report.gameVersion === 217) {
     proto = new protocol.Protocol217();
-    versionStr = '[RE 1.3]';
+    versionStr = '[v. 1.3]';
   } else if (report.gameVersion === 220) {
     proto = new protocol.Protocol220();
-    versionStr = '[RE 1.4]';
+    versionStr = '[v. 1.4]';
   } else if (report.gameVersion === 226) {
     proto = new protocol.Protocol226();
-    versionStr = '[RE 1.5]';
+    versionStr = '[v. 1.5]';
   } else {
     proto = new protocol.Protocol226();
     versionStr = '';
@@ -120,7 +120,7 @@ function processsServerReply(host, port, reply, batchId) {
   var mutators = stream.readNextInt();
   count--;
   report.mutatorFlags = mutators;
-  report.mutators = proto ? proto.mutatorsFromFlags(mutators) : '???';
+  report.mutators = proto ? proto.mutatorsFromFlags(mutators, gameMode) : '???';
   report.timeLeft = stream.readNextInt();
   count--;
   report.maxClients = stream.readNextInt();
@@ -138,7 +138,7 @@ function processsServerReply(host, port, reply, batchId) {
     var patchVersion = stream.readNextInt();
     count = count - 3;
     versionStr =
-      '[RE ' + majorVersion + '.' + minorVersion + '.' + patchVersion + ']';
+      '[v. ' + majorVersion + '.' + minorVersion + '.' + patchVersion + ']';
   }
   while(count > 0) {
    stream.readNextInt();
@@ -149,22 +149,46 @@ function processsServerReply(host, port, reply, batchId) {
   if (report.gameVersion >= 227) {
     report.versionbranch = stream.readNextString();
   }
-  var playerNames = [];
+  var playerNames = []; // kept for API backward compatibility
+  var players = [];
+  var rawName;
+  var plainName;
   for (var i = 0; i < report.clients; i++) {
-    var rawName = stream.readNextString();
-    playerNames.push({
+    rawName = stream.readNextString();
+    plainName = stripString(rawName, report.gameVersion);
+    var playerName = {
       raw : rawName,
-      plain : stripString(rawName, report.gameVersion)
-    });
+      plain : plainName
+    };
+    playerNames.push(playerName);
+    var player = {
+      name: plainName,
+      rawName: rawName
+    };
+    var parts = rawName.split('\f');
+    if (parts.length > 3) {
+      var privilegePart = parts[3].trim();
+      var privilegeMatch = /\(\$priv([a-z]+)tex\)/.exec(privilegePart);
+      if (privilegeMatch) {
+        var privilege = privilegeMatch[1].trim();
+        if (privilege) {
+          player.privilege = privilege;
+        }
+      }
+    }
+    players.push(player);
   }
   report.playerNames = playerNames;
+  report.players = players;
+
   if (report.gameVersion >= 226) {
       var authNames = [];
-      for (var i = 0; i < report.clients; i++) {
-        var rawName = stream.readNextString();
+      for (var j = 0; j < report.clients; j++) {
+        rawName = stream.readNextString();
+        plainName = stripString(rawName, report.gameVersion);
         authNames.push({
           raw : rawName,
-          plain : stripString(rawName, report.gameVersion)
+          plain : plainName
         });
       }
       report.authNames = authNames;
@@ -181,8 +205,8 @@ function processsServerReply(host, port, reply, batchId) {
 
 function startServerQuery(host, port, batchId, andThen) {
   logger.info('checking status of server: ', host, port);
+  var client = null;
   try {
-    var client = null;
     var query = new Buffer(5);
     query.writeUInt8(0x81, 0);
     query.writeUInt8(0xec, 1);
