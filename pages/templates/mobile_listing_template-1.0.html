@@ -23,7 +23,8 @@
     {{#if players}}
       <div class="players">
         {{#each players}}
-          <img src="icons/privilege/{{privilege}}.png" title="{{privilege}}" class="privicon">{{name}}&nbsp;
+          <span class="player">
+            <img src="icons/privilege/{{privilege}}.png" title="{{privilege}}" class="privicon">{{name}}</span>{{#unless @last}},&nbsp;{{/unless}}
         {{/each}}
       </div>
     {{/if}}

@@ -10,7 +10,6 @@
     <th>ends in<br />(mins)</th>
     <th>access</th>
     <th>country</th>
-    <th>seen</th>
   </thead>
   <tbody>
   {{#each reports}}
@@ -21,7 +20,8 @@
       {{#if players}}
         <div class="players">
           {{#each players}}
-            <img src="icons/privilege/{{privilege}}.png" title="{{privilege}}" class="privicon">{{name}}&nbsp;
+            <span class="player">
+              <img src="icons/privilege/{{privilege}}.png" title="{{privilege}}" class="privicon">{{name}}</span>{{#unless @last}},&nbsp;{{/unless}}
           {{/each}}
         </div>
       {{/if}}
@@ -33,7 +33,6 @@
     <td>{{remaining}}</td>
     <td>{{masterMode}}</td>
     <td>{{country}}</td>
-    <td>{{lastSeen}}</td>
   </tr>
   {{/each}}
   </tbody>

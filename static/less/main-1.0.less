@@ -58,9 +58,9 @@ table th.header {
 th, td {
   padding: 0 4px 0 4px;
 }
-.headerSortUp, .headerSortDown {
+/* .headerSortUp, .headerSortDown {
   font-style: italic;
-}
+} */
 .headerSortUp:after {
   content: "\21d1";
 }
@@ -87,10 +87,14 @@ div.players {
   font-size: 75%;
   margin: 0;
   padding: 0;
-  padding-top: 3px;
+  padding-left: 4px;
+}
+span.player {
+  white-space: nowrap;
 }
 .privicon {
-  padding-right: 2px;
+  padding: 2px;
+  margin-bottom: -4px;
 }
 .content h4 {
   color: @player-color;
