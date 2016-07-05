@@ -145,7 +145,8 @@ function processsServerReply(host, port, reply, batchId) {
    count--;
   }
   report.mapName = stream.readNextString();
-  report.description = uncolorString(stream.readNextString()) + (versionStr ? ' ' + versionStr : '');
+  var serverName = uncolorString(stream.readNextString()) || (host + ':' + port);
+  report.description = serverName + (versionStr ? ' ' + versionStr : '');
   if (report.gameVersion >= 227) {
     report.versionbranch = stream.readNextString();
   }

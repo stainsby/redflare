@@ -28,10 +28,6 @@ function loadLatestReport() {
           report.gameMode = report.gameMode;
           report.mutators = report.mutators.join(' ');
           report.remaining = Math.round(report.timeLeft/60);
-          var playerNames = _.map(report.playerNames, function(name) {
-            return name.plain;
-          });
-          report.names = playerNames.join(', ');
           var cssClasses = [];
           if (report.clients == 0) {
             cssClasses.push('empty');

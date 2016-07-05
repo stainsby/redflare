@@ -18,8 +18,12 @@
     <td class="full" style="border-left: solid {{heatColor}} 8px">{{fullness}}</td>
     <td class="name" style="width: 28em;">
       <a href="redeclipse://{{host}}:{{port}}/">{{description}}</a>
-      {{#if names}}
-      <br /><span class="players">{{names}}</span>
+      {{#if players}}
+        <div class="players">
+          {{#each players}}
+            <img src="icons/privilege/{{privilege}}.png" title="{{privilege}}" class="privicon">{{name}}&nbsp;
+          {{/each}}
+        </div>
       {{/if}}
     </td>
     <td class="players">{{clients}}</td>
