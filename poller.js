@@ -96,23 +96,23 @@ function processsServerReply(host, port, reply, batchId) {
   var count = stream.readNextInt();
   report.gameVersion = stream.readNextInt();
   count--;
-  var versionStr = '[unknown version (' + report.gameVersion + ')]';
+  var versionName = 'unknown version (' + report.gameVersion + ')';
   var proto = null;
   if (report.gameVersion === 214) {
-    versionStr = '[OLD]';
+    versionName = 'OLD';
     proto = new protocol.Protocol214();
   } else if (report.gameVersion === 217) {
     proto = new protocol.Protocol217();
-    versionStr = '[v. 1.3]';
+    versionName = '1.3';
   } else if (report.gameVersion === 220) {
     proto = new protocol.Protocol220();
-    versionStr = '[v. 1.4]';
+    versionName = '1.4';
   } else if (report.gameVersion === 226) {
     proto = new protocol.Protocol226();
-    versionStr = '[v. 1.5]';
+    versionName = '1.5';
   } else {
     proto = new protocol.Protocol226();
-    versionStr = '';
+    versionName = '';
   }
   var gameMode = stream.readNextInt();
   count--;
@@ -137,8 +137,8 @@ function processsServerReply(host, port, reply, batchId) {
     var minorVersion = stream.readNextInt();
     var patchVersion = stream.readNextInt();
     count = count - 3;
-    versionStr =
-      '[v. ' + majorVersion + '.' + minorVersion + '.' + patchVersion + ']';
+    versionName =
+      '' + majorVersion + '.' + minorVersion + '.' + patchVersion;
   }
   while(count > 0) {
    stream.readNextInt();
@@ -146,7 +146,8 @@ function processsServerReply(host, port, reply, batchId) {
   }
   report.mapName = stream.readNextString();
   var serverName = uncolorString(stream.readNextString()) || (host + ':' + port);
-  report.description = serverName + (versionStr ? ' ' + versionStr : '');
+  report.versionName = versionName;
+  report.description = serverName;
   if (report.gameVersion >= 227) {
     report.versionbranch = stream.readNextString();
   }
