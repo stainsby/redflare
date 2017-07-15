@@ -8,6 +8,7 @@
   "dependencies": {
     "async": "0.x",
     "express": "2.x",
+    "flag-icon-css": "^2.8.0",
     "geoip-lite": "^1.2.x",
     "nlogger": "0.x",
     "underscore": "1.x"
