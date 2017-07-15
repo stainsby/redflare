@@ -1,16 +1,16 @@
 {
-  "name" : "redflare",
-  "description" : "A web-based RedEclipse gaming monitor.",
-  "version" : "0.1.0",
-  "author" : "Sam Stainsby <sam@stainsby.id.au> (http://sustainablesoftware.com.au/)",
-  "main" : "app.js",
-  "node" : "0.6.x",
-  "dependencies" : {
-    "async" : "0.x",
-    "express" : "2.x",
-    "geoip-lite" : "1.x",
-    "nlogger" : "0.x",
-    "underscore" : "1.x"
+  "name": "redflare",
+  "description": "A web-based RedEclipse gaming monitor.",
+  "version": "0.1.0",
+  "author": "Sam Stainsby <sam@stainsby.id.au> (http://sustainablesoftware.com.au/)",
+  "main": "app.js",
+  "node": "0.6.x",
+  "dependencies": {
+    "async": "0.x",
+    "express": "2.x",
+    "geoip-lite": "^1.2.x",
+    "nlogger": "0.x",
+    "underscore": "1.x"
   },
   "license": "GNU Affero version 3"
 }
