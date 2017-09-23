@@ -53,14 +53,11 @@ table {
 }
 table th.header {
   text-decoration: underline;
-  cursor: pointer; 
+  cursor: pointer;
 }
 th, td {
   padding: 0 4px 0 4px;
 }
-/* .headerSortUp, .headerSortDown {
-  font-style: italic;
-} */
 .headerSortUp:after {
   content: "\21d1";
 }
@@ -68,7 +65,11 @@ th, td {
   content: "\21d3";
 }
 tr.server {
-  line-height: 1.0em;
+  line-height: 1.1em;
+  background-color:#181616;
+}
+tr.server:hover {
+  background-color:#291818;
 }
 tr.server.notopen {
   font-style: italic;
@@ -78,6 +79,9 @@ tr.server.empty {
 }
 tr.server.empty a {
   color: darken(@link-color, 12%);
+}
+tr.server td {
+  border-radius: 6px;
 }
 tr.server td.full {
   text-align: center;
