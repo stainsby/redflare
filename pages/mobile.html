@@ -3,6 +3,7 @@
 <head>
 <title>Redflare - the Red Eclipse gaming monitor</title>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
 <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
 <link href='https://fonts.googleapis.com/css?family=Prosto+One' rel='stylesheet' type='text/css'>
 <link rel="stylesheet/less" type="text/css" href="/less/elements-0.6.less" />
@@ -17,16 +18,20 @@
 <script src="/js/pretty_date-1.0.js" type="text/javascript"></script>
 <script src="/js/jquery.tablesorter-2.0.5b.min.js" type="text/javascript"></script>
 </head>
-<body>
+<body class="mobile">
 
 <div id="banner" class="banner">
   <h1>Redflare</h1>
   <h2 style="line-height: 1.2em;">
     The <a href="http://www.redeclipse.net/" target="_blank">Red Eclipse</a>
-    gaming monitor (mobile version).
+    Gaming Monitor
   </h2>
+  <div class="notify-controls">
+    <p>Game Notifications:&nbsp;<a href="#" class="status">...</a></p>
+  </div>
   <p>Switch to the <a href="/">big screen version</a>.</p>
 </div>
+
 
 <div id="content" class="content">
   <noscript>
@@ -49,6 +54,7 @@
 
 <script src="/scripts/report_loader-1.2.js" type="text/javascript"></script>
 <script src="/scripts/template_loader-1.0.js" type="text/javascript"></script>
+<script src="/scripts/notifier-1.0.js" type="text/javascript"></script>
 
 </body>
 </html>

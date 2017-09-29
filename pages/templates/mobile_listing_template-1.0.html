@@ -1,33 +1,29 @@
 <h4>{{playerCount}} players on {{activeServerCount}} out of {{serverCount}} servers.</h4>
 
 {{#each reports}}
-<div class="tile" style="padding: 0.4em 0.8em 0.4em 0.4em; border-bottom: dotted #333 1px">
+<div class="tile">
   <div class="left" style="
-      line-height: 2em;
-      float: left; padding: 0.4em;
-      width: 4em;
-      text-align: center;
-      overflow: hidden;
       border-left: solid {{heatColor}} 8px;
-      background: -webkit-linear-gradient(left, {{heatColor}}, #111);
-      background: -moz-linear-gradient(left, {{heatColor}}, #111);
-      background: -o-linear-gradient(left, {{heatColor}}, #111);
-      background: -ms-linear-gradient(left, {{heatColor}}, #111);
-      text-shadow: 3px 3px 4px black;">
+      background: -webkit-linear-gradient(left, {{heatColor}}, #291818);
+      background: -moz-linear-gradient(left, {{heatColor}}, #291818);
+      background: -o-linear-gradient(left, {{heatColor}}, #291818);
+      background: -ms-linear-gradient(left, {{heatColor}}, #291818);">
     <span class="players" style="font-size: 200%">{{clients}}</span><br />
     <span class="players">players</span>
   </div>
+  <div class="right">
     <span class="name"><a href="redeclipse://{{host}}:{{port}}/">{{description}} [v. {{versionName}}]</a></span>
     <br />
     {{mutators}} {{gameMode}} on '{{mapName}}'
     {{#if players}}
       <div class="players">
         {{#each players}}
-          <span class="player">
+          <span class="player {{#if authName.plain}}with-auth{{/if}}" {{#if authName.plain}}title="{{authName.plain}}"{{/if}}>
             <img src="icons/privilege/{{privilege}}.png" title="{{privilege}}" class="privicon">{{name}}</span>{{#unless @last}},&nbsp;{{/unless}}
         {{/each}}
       </div>
     {{/if}}
+  </div>
   <div style="clear: both"></div>
 </div>
 {{/each}}

@@ -10,6 +10,11 @@ var tableSortList = null;
 function loadLatestReport() {
   var req = $.get('/reports');
   req.success(function(reports) {
+    try {
+      $('body').trigger('redflareReports', reports);
+    } catch (err) {
+      console.log('uncaught error during "redflareReports" event:', err);
+    }
     var playerCount = 0;
     var serverCount = 0;
     var activeServerCount = 0;
@@ -50,6 +55,19 @@ function loadLatestReport() {
           } else {
             report.heatColor = 'hsl(' + heatColorHSL.join(', ') + ')';
           }
+
+          // add auth names to player records
+
+          var players = report.players;
+          if (players && players.length > 0) {
+            var numPlayers = players.length;
+            var authNames = report.authNames;
+            for (var iplayer = 0; iplayer < numPlayers; iplayer++) {
+              var player = players[iplayer];
+              player.authName = authNames[iplayer];
+            }
+          }
+
         } catch(err) {
           //console.log("WARNING: failed to load: ", key, "\nerror was:\n", err, "\nreport was:\n", report);
         }
@@ -66,12 +84,12 @@ function loadLatestReport() {
         activeServerCount : activeServerCount
       }
     ));
-    $('.serverlist').tablesorter({ 
+    $('.serverlist').tablesorter({
       sortInitialOrder: 'desc',
       sortList: (tableSortList ? tableSortList : [[0,1]]),
-      headers: { 
+      headers: {
         9 : { sorter: false  }
-      } 
+      }
     }).bind("sortEnd", function(sorter) {
       tableSortList = sorter.target.config.sortList;
     });

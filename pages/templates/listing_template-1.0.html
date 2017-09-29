@@ -21,8 +21,9 @@
       {{#if players}}
         <div class="players">
           {{#each players}}
-            <span class="player">
-              <img src="icons/privilege/{{privilege}}.png" title="{{privilege}}" class="privicon">{{name}}</span>{{#unless @last}},&nbsp;{{/unless}}
+            <span class="player {{#if authName.plain}}with-auth{{/if}}" {{#if authName.plain}}title="{{authName.plain}}"{{/if}}>
+              <img src="icons/privilege/{{privilege}}.png" title="{{privilege}}" class="privicon">{{name}}</span>
+              {{#unless @last}}, {{/unless}}
           {{/each}}
         </div>
       {{/if}}

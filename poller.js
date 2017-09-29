@@ -73,9 +73,9 @@ function leftZeroPad(s, n) {
 var lastChecked = null;
 var lastIdCounter = 0;
 function processsServerReply(host, port, reply, batchId) {
-  
+
   var report = {};
-  
+
   var reported = new Date();
   var id = batchId + '_' + host + '_' + port;
   if (id == lastChecked) {
@@ -86,9 +86,9 @@ function processsServerReply(host, port, reply, batchId) {
   lastChecked = id;
   id = id + '.' + leftZeroPad('' + lastIdCounter, 3);
   report._id = id;
-  
+
   var stream = new protocol.Stream(reply, 5);
-  
+
   report.host = host;
   report.port = port - 1;
   report.reported = reported.getTime();
@@ -200,13 +200,13 @@ function processsServerReply(host, port, reply, batchId) {
   if (geoipInfo) {
     report.country = geoip.lookup(host).country;
   }
-  
+
   return report;
 }
 
 
 function startServerQuery(host, port, batchId, andThen) {
-  logger.info('checking status of server: ', host, port);
+  logger.info('checking status of server: ', host, ':', port);
   var client = null;
   try {
     var query = new Buffer(5);
@@ -220,7 +220,7 @@ function startServerQuery(host, port, batchId, andThen) {
       client.close();
       client = null;
       try {
-        logger.info('  .. procesing server reply for: ', host, port);
+        logger.info('  .. procesing server reply for: ', host, ':', port);
         var report = processsServerReply(host, port, reply, batchId);
         logger.debug('report: ', JSON.stringify(report));
         emitter.emit('report', report);
