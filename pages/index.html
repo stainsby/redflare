@@ -20,7 +20,7 @@
 <script src="/js/jquery.tablesorter-2.0.5b.min.js" type="text/javascript"></script>
 <script>
   Handlebars.registerHelper('lowercase', function(str) {
-    return str.toLowerCase();
+    return str ? str.toLowerCase() : '';
   });
 </script>
 </head>
