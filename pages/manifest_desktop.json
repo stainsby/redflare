@@ -1,14 +1,14 @@
 {
-  "short_name": "Redflare",
-  "name": "Redflare Red Eclipse Game Monitor",
+  "short_name": "Redflare Desktop",
+  "name": "Redflare Red Eclipse Game Monitor (Desktop Edition)",
   "icons": [
     {
-      "src": "/static/icons/redeclipse_icon_192.png",
+      "src": "/icons/redeclipse_icon_192.png",
       "type": "image/png",
       "sizes": "192x192"
     },
     {
-      "src": "/static/icons/redeclipse_icon_512.png",
+      "src": "/icons/redeclipse_icon_512.png",
       "type": "image/png",
       "sizes": "512x512"
     }
