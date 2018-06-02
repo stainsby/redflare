@@ -1,0 +1,20 @@
+{
+  "short_name": "Redflare",
+  "name": "Redflare Red Eclipse Game Monitor",
+  "icons": [
+    {
+      "src": "/static/icons/redeclipse_icon_192.png",
+      "type": "image/png",
+      "sizes": "192x192"
+    },
+    {
+      "src": "/static/icons/redeclipse_icon_512.png",
+      "type": "image/png",
+      "sizes": "512x512"
+    }
+  ],
+  "start_url": "/mobile.html?utm_source=a2hs",
+  "background_color": "#333",
+  "display": "fullscreen",
+  "theme_color": "#e11"
+}
