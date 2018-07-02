@@ -1,0 +1,166 @@
+@import "theme.less";
+@import "elements.less";
+
+body {
+  font-family: @font, Helvetica, Arial, sans-serif;
+  color: @text-color;
+  font-size: @text-size;
+  background: @background-color;
+  margin: 0;
+}
+div.banner {
+  background-image: url(/img/bg.jpg);
+  background-repeat: no-repeat;
+  background-position: center top;
+  padding: 16px 64px 16px 64px;
+}
+div.content {
+  padding: 16px 32px 16px 32px;
+  .box-shadow(inset 0 0 16px #f40);
+  background: #111;
+  margin: 0 64px 0 64px;
+  .rounded(16px);
+  color: @content-text-color;
+}
+div.footer {
+  padding: 16px 64px 16px 8em;
+  font-size: 80%;
+}
+h1 {
+  color: @title-color;
+  text-shadow: 0 0 32px @text-color;
+}
+a {
+  text-decoration: none;
+  color: @link-color;
+}
+a:hover {
+  text-decoration: underline;
+}
+a:visited {
+  color: @link-color;
+}
+
+div.clearfix {
+  clear: both;
+}
+
+table {
+  border-spacing: 0.4em;
+}
+table th.header {
+  text-decoration: underline;
+  cursor: pointer;
+}
+th, td {
+  padding: 0 4px 0 4px;
+}
+.headerSortUp:after {
+  content: "\21d1";
+}
+.headerSortDown:after {
+  content: "\21d3";
+}
+tr.server {
+  line-height: 1.1em;
+  background-color:#181616;
+}
+tr.server:hover, .tile:hover {
+  background-color:#291818;
+}
+tr.server.notopen {
+  font-style: italic;
+}
+tr.server.empty {
+  color: darken(@content-text-color, 33%);
+}
+tr.server.empty a {
+  color: darken(@link-color, 12%);
+}
+tr.server td {
+  border-radius: 6px;
+}
+tr.server td.full {
+  text-align: center;
+}
+div.players {
+  color: @player-color;
+  font-size: 75%;
+  margin: 0;
+  padding: 0;
+  padding-left: 4px;
+}
+span.player {
+  white-space: nowrap;
+}
+.privicon {
+  padding: 2px;
+  margin-bottom: -4px;
+}
+.content h4 {
+  color: @player-color;
+}
+.tile {
+  display: flex;
+  align-items: flex-start;
+  padding: 0.4em;
+  border-bottom: dotted #333 1px;
+  border-radius: 16px;
+  margin-bottom: 16px;
+}
+.tile .left {
+  margin-right: 4px;
+  line-height: 2em;
+  padding: 0.4em 0.8em 0.2em 0.2em;
+  flex: 0 0 5em;
+  text-align: center;
+  overflow: hidden;
+  text-shadow: 3px 3px 4px black;
+  border-radius: 16px;
+}
+.tile .right {
+  padding-left: 8px;
+}
+.notify-controls {
+  font-size: 110%;
+  color: @title-color;
+  text-shadow: 0 0 32px @text-color;
+}
+.desktop .notify-controls {
+  float: right;
+  font-size: 160%;
+}
+.notify-controls .status {
+  color: @link-color;
+}
+.notify-controls-desktop .status {
+  float: right;
+}
+.mobile {
+  padding: 0;
+}
+.mobile .content {
+  font-size: 10pt;
+  font-weight: normal;
+  margin: 0;
+  border-radius: 0;
+  padding: 15px;
+}
+.player.with-auth {
+  border-bottom: dotted 1px #666;
+  cursor: help;
+}
+.flag-icon {
+  -webkit-filter: grayscale(70%);
+  filter: grayscale(70%);
+}
+.flag-icon:hover {
+  -webkit-filter: grayscale(0%);
+  filter: grayscale(0%);
+}
+.mobile .banner {
+  padding: 2px 8px 0 8px;
+}
+.mobile .banner h2 {
+  font-size: 100%;
+}

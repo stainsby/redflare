@@ -3,12 +3,12 @@
   "name": "Redflare Red Eclipse Game Monitor (Mobile Edition)",
   "icons": [
     {
-      "src": "/icons/redeclipse_icon_192.png",
+      "src": "/icons/redeclipse_icon_tr_192.png",
       "type": "image/png",
       "sizes": "192x192"
     },
     {
-      "src": "/icons/redeclipse_icon_512.png",
+      "src": "/icons/redeclipse_icon_tr_512.png",
       "type": "image/png",
       "sizes": "512x512"
     }

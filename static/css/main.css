@@ -1,11 +1,20 @@
-@import "theme-1.0.less";
-@import "elements-0.6.less";
+/*---------------------------------------------------
+    LESS Elements 0.6
+  ---------------------------------------------------
+    A set of useful LESS mixins by Dmitry Fadeyev
+    Special thanks for mixin suggestions to:
+      Kris Van Herzeele,
+      Benoit Adam,
+      Portenart Emile-Victor,
+      Ryan Faerman
 
+    More info at: http://lesselements.com
+-----------------------------------------------------*/
 body {
-  font-family: @font, Helvetica, Arial, sans-serif;
-  color: @text-color;
-  font-size: @text-size;
-  background: @background-color;
+  font-family: "Prosto One", Helvetica, Arial, sans-serif;
+  color: #e11;
+  font-size: 10pt;
+  background: #460000;
   margin: 0;
 }
 div.banner {
@@ -16,35 +25,40 @@ div.banner {
 }
 div.content {
   padding: 16px 32px 16px 32px;
-  .box-shadow(inset 0 0 16px #f40);
+  -webkit-box-shadow: inset 0 0 16px #f40;
+  -moz-box-shadow: inset 0 0 16px #f40;
+  box-shadow: inset 0 0 16px #f40;
   background: #111;
   margin: 0 64px 0 64px;
-  .rounded(16px);
-  color: @content-text-color;
+  -webkit-border-radius: 16px;
+  -moz-border-radius: 16px;
+  border-radius: 16px;
+  -moz-background-clip: padding;
+  -webkit-background-clip: padding-box;
+  background-clip: padding-box;
+  color: #ccc;
 }
 div.footer {
   padding: 16px 64px 16px 8em;
   font-size: 80%;
 }
 h1 {
-  color: @title-color;
-  text-shadow: 0 0 32px @text-color;
+  color: #fff;
+  text-shadow: 0 0 32px #e11;
 }
 a {
   text-decoration: none;
-  color: @link-color;
+  color: #f40;
 }
 a:hover {
   text-decoration: underline;
 }
 a:visited {
-  color: @link-color;
+  color: #f40;
 }
-
 div.clearfix {
   clear: both;
 }
-
 table {
   border-spacing: 0.4em;
 }
@@ -52,7 +66,8 @@ table th.header {
   text-decoration: underline;
   cursor: pointer;
 }
-th, td {
+th,
+td {
   padding: 0 4px 0 4px;
 }
 .headerSortUp:after {
@@ -63,19 +78,20 @@ th, td {
 }
 tr.server {
   line-height: 1.1em;
-  background-color:#181616;
+  background-color: #181616;
 }
-tr.server:hover, .tile:hover {
-  background-color:#291818;
+tr.server:hover,
+.tile:hover {
+  background-color: #291818;
 }
 tr.server.notopen {
   font-style: italic;
 }
 tr.server.empty {
-  color: darken(@content-text-color, 33%);
+  color: #787878;
 }
 tr.server.empty a {
-  color: darken(@link-color, 12%);
+  color: #c23400;
 }
 tr.server td {
   border-radius: 6px;
@@ -84,7 +100,7 @@ tr.server td.full {
   text-align: center;
 }
 div.players {
-  color: @player-color;
+  color: #e70;
   font-size: 75%;
   margin: 0;
   padding: 0;
@@ -98,7 +114,7 @@ span.player {
   margin-bottom: -4px;
 }
 .content h4 {
-  color: @player-color;
+  color: #e70;
 }
 .tile {
   display: flex;
@@ -123,15 +139,15 @@ span.player {
 }
 .notify-controls {
   font-size: 110%;
-  color: @title-color;
-  text-shadow: 0 0 32px @text-color;
+  color: #fff;
+  text-shadow: 0 0 32px #e11;
 }
 .desktop .notify-controls {
   float: right;
   font-size: 160%;
 }
 .notify-controls .status {
-  color: @link-color;
+  color: #f40;
 }
 .notify-controls-desktop .status {
   float: right;
