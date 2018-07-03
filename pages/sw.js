@@ -1,4 +1,4 @@
-var CACHE_NAME = 'redflare-7';
+var CACHE_NAME = 'redflare-8';
 
 self.addEventListener('notificationclick', function(event) {
   var action = event.action || null;

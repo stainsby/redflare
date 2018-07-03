@@ -1,7 +1,7 @@
 {
   "name": "redflare",
   "description": "A web-based RedEclipse gaming monitor.",
-  "version": "0.1.0",
+  "version": "7.0.0",
   "author": "Sam Stainsby <sam@stainsby.id.au> (http://sustainablesoftware.com.au/)",
   "main": "app.js",
   "node": "0.6.x",
