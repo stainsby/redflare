@@ -110,8 +110,11 @@ function processsServerReply(host, port, reply, batchId) {
   } else if (report.gameVersion === 226) {
     proto = new protocol.Protocol226();
     versionName = '1.5';
+  } else if (report.gameVersion === 245) {
+    proto = new protocol.Protocol245();
+    versionName = '1.5';
   } else {
-    proto = new protocol.Protocol226();
+    proto = new protocol.Protocol245();
     versionName = '';
   }
   var gameMode = stream.readNextInt();
